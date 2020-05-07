@@ -1,23 +1,19 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed May  6 09:48:54 2020
-
-@author: (╯°□°)╯︵ ┻━┻
-"""
 
 import threading
 import time
-
-def cont(ejer,num=0):
-        seg=(num+1)%60
-        if(seg<ejer)  :                      
-            return [seg,'ejercicio']
-        else:
-            return [seg,'descanso']
+class Temp:
+    
+    def cont(self,ejer,num=0):
+            seg=(num+1)%60
+            if(seg<ejer)  :                      
+                return [seg,'ejercicio']
+            else:
+                return [seg,'descanso']
 
 
 #hilo para el codigode la app
-        
+
+
 def doit(ejer,tiempo,arg):
     i=0
     t = threading.currentThread()
@@ -25,7 +21,7 @@ def doit(ejer,tiempo,arg):
         
         for i in range(60):
                     time.sleep(1)            
-                    msg=str(cont(ejer,i) )
+                    msg=str(Temp.cont(ejer,i) )
                     print(msg+" minutos:"+str(1))
         i=i+1
         if(i==tiempo):
@@ -41,5 +37,8 @@ estoesparamostrarquesedesactivathehilo=parametro=120
 time.sleep(estoesparamostrarquesedesactivathehilo)
 t.do_run = False
 t.join()
+
+
+
 
 
