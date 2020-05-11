@@ -12,7 +12,7 @@
 #importe de librerias
 from Temporalizador import *
 
-class intervalo:
+class Intervalo:
     def __init__(self, tInt: int):
         self.temp = Temporalizador()
         self.temp.iniciar(tInt)
@@ -33,14 +33,23 @@ class Rutina:
         self.brkr = False
         self.stat = "Ejercicio"
 
+    def detener(self):
+        self.ejrc.detener()
+        self.dscn.detener()
+        self.rutn.detener()
+        self.brkr = False
+
     def controladorState(self, tAct):
-        print(self.stat, tAct)
+        print("Quedan", tAct, "segundos de ", self.stat)
         if tAct == 0:
             if self.stat == "Ejercicio":
+                self.ejrc.detener()
                 self.stat = "Descanso"
             elif self.stat == "Descanso":
+                self.dscn.detener()
                 self.stat = "Ejercicio"
-            self.iniciarState()
+            if self.brkr == True:
+                self.iniciarState()
 
     def iniciarState(self):
         if self.stat == "Ejercicio":
@@ -48,16 +57,22 @@ class Rutina:
         elif self.stat == "Descanso":
             self.dscn.iniciar(self.dscn.getTReal(), salida=self.controladorState)
 
+    def controlarRutina(self, tAct):
+        print("Quedan", tAct, "segundos de la rutina total de", self.nomb)
+        if tAct == 0:
+            self.detener()
+            print("La rutina", self.nomb, "ha finalizado totalmente")
+
     def iniciar(self):
         self.brkr = True
-        self.rutn.iniciar(self.rutn.getTReal())
+        self.rutn.iniciar(self.rutn.getTReal(), salida=self.controlarRutina)
         self.iniciarState()
 
     def getBreak(self):
         return self.brkr
 
 def main():
-    r = Rutina("Pierna", 60, 5, 10)
+    r = Rutina("Pierna", 30, 5, 10)
     r.iniciar()
     while r.getBreak():
         continue

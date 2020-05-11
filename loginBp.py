@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Name:        Modulo Algo
+# Name:        Login con BluePrint
 # Purpose:     Sacarle nota a Daza dospuntos(w/2)
 #
 # Author:      Alguien

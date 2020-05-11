@@ -13,12 +13,13 @@
 from flask import Flask, render_template, redirect, url_for, session, request, flash
 from flask_login import LoginManager, login_required, current_user, logout_user, login_user
 from flask_sqlalchemy import SQLAlchemy
+import App
 
 app = Flask(__name__)
 
-app.secret_key="dazanocalificadazanocalificadazasicalificasitienemonitorperodazanocalifica"
+app.secret_key = App.SK
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://hoxwkmyfqupeab:c48a884b0095d4d7094b2543608cc2d10c58209a3370355bba9da6477a1c5f16@ec2-174-129-18-210.compute-1.amazonaws.com:5432/d1hi9b9fumoerc'
+app.config['SQLALCHEMY_DATABASE_URI'] = App.URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db=SQLAlchemy(app)
 import GestionBD as gdb
