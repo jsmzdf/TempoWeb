@@ -12,7 +12,7 @@
 #importe de librerias
 import threading
 
-class Temporizador:
+class Temporalizador:
     def __init__(self):
         '''inicializa el Temporalizador con 0 segundos y pausado'''
         self.tReal = 0
@@ -37,6 +37,12 @@ class Temporizador:
     def getBreak(self) -> bool:
         return self.breaker
 
+    def exportarAct(self, salida):
+        try:
+            salida(self.getTAct())
+        except:
+            salida = self.getTAct()
+
     def reset(self):
         self.ingresarT(self.tReal)
 
@@ -57,13 +63,16 @@ class Temporizador:
 
     def contar(self, salida = None):
         if self.getTAct() > 0:
-            threading.Timer(1,lambda: [self.setTAct(self.getTAct() - 1),print(self.getTAct()), salida, self.contar(salida=salida)]).start()
+            threading.Timer(1,lambda: [self.setTAct(self.getTAct() - 1),print(self.getTAct()), self.exportarAct(salida), self.contar(salida=salida)]).start()
         else:
             self.detener()
 
+def set(var: int):
+    print(var)
+
 def main():
-    t = Temporizador()
-    t.iniciar(5, salida=lambda:[print(t.getTAct())])
+    t = Temporalizador()
+    t.iniciar(5, salida=set)
     while t.getBreak():
         continue
 
