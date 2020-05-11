@@ -11,9 +11,26 @@
 
 #importe de librerias
 
-def main():
-    #modulo mancerastico
-    pass
+class Usuario:
+    def __init__(self, nombre, rutina):
+        self.__nombre = nombre
+        self.__rutina = rutina
 
-if __name__ == '__main__':
-    main()
+    def getnombre(self):
+        return self.__nombre
+
+    def getrutina(self):
+        return self.__rutina
+
+    def setnombre(self, nombre):
+        self.__nombre = nombre
+
+    def setrutina(self, salario):
+        self.__salario = salario
+
+    def delnombre(self):
+        del self.__nombre
+
+    def delrutina(self):
+        del self.__rutina
+
