@@ -25,8 +25,8 @@ class Usuario:
     def setnombre(self, nombre):
         self.__nombre = nombre
 
-    def setrutina(self, salario):
-        self.__salario = salario
+    def setrutina(self, rutina):
+        self.__rutina = rutina
 
     def delnombre(self):
         del self.__nombre
