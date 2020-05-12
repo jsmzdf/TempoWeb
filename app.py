@@ -35,7 +35,7 @@ login_manager.login_view = 'logbp.login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return usuario.query.get(int(user_id))
+    return mdb.usuario.query.get(int(user_id))
 
 #configuracion de ruta /
 @app.route('/', methods=["GET", "POST"])
@@ -46,7 +46,7 @@ def index():
 #configuracion de ruta /callback
 @app.route('/callback', methods=["GET", "POST"])
 def callback():
-    user = mdb.usuario("1111111", "apoyosolidarioesrealymipresidenteuribenuncanosmentiria")
+    user = mdb.usuario.query.filter_by(nom_usu="1111111").first()
     login_user(user)
     return redirect(url_for('index'))
 
