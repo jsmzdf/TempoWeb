@@ -16,17 +16,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 logbp = Blueprint('logbp', __name__, template_folder='templates')#
 
-from App import db
+from app import db
+import ModelosBD as mdb
 
-#configuracion de ruta /login
-@logbp.route('/login', methods=["GET", "POST"])
-def login():
-    return render_template('login.html')
-
-#configuracion de ruta /signin
-@logbp.route('/signin', methods=["GET", "POST"])
-def signin():
-    return render_template('signin.html')
 
 #configuracion de ruta /forgotpass
 @logbp.route('/forgotpass', methods=["GET", "POST"])
@@ -39,6 +31,8 @@ def forgotpass():
 def logout():
     logout_user()
     return redirect(url_for('logbp.login'))
+#configuracion de ruta /login
+
 
 def main():
     pass

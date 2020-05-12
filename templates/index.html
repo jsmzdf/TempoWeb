@@ -5,10 +5,11 @@
     <form action="/index.html", method="GET", enctype="multipart/form-data"><br>
     <label for="cars">Rutina</label>
     <select id="cars">
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="mercedes">Mercedes</option>
-      <option value="audi">Audi</option><br>
+    {%if rutina%}
+                {%for rut in rutina%}
+                    <option>{{rut.nom_curs}}"</option>
+                {%endfor%}
+            {%endif%}
 
     </select><br>
         <button type="submit" name="otra" id="otra" >Otra</button><br>
@@ -46,9 +47,21 @@
     </select><br>
         <button type="submit" name="otra" id="otra" >Otra</button><br>
     <label >Cronómetro </label><br>
-        <label name="MostrarE" id="MostrarE" class="Tiempo" >min</label>
-        <label>:</label>
-        <label name="MostrarE" id="MostrarE" class="Tiempo" >seg</label><br>
+
+       <! --debes de ingresar la opcion que quieres en numero>
+        <form action="Rutina.py">
+        <input type=text name="opcionSal"><br>
+        <input type=submit  name="opcion" value="el disparador para esto">
+        <br>
+        <img src="IMGdescanso" alt="img-paint" class="img-thumbnail">
+        <br>
+         <img src="omgejercico" alt="img-paint" class="img-thumbnail">
+        <br>
+
+        <button type="submit" name="Empezar" id="Empezar" >Empezar</button>
+        <button type="submit" name="Pausar" id="Pausar" > Pausar</button>
+        </form>
+        <! --debes de ingresar la opcion que quieres en numero><br>
 
            <img src="IMGdescanso" alt="img-paint" class="img-thumbnail">
         <br>

@@ -10,6 +10,7 @@
 #-------------------------------------------------------------------------------
 
 #importe de librerias
+
 import threading
 
 class Temporalizador:
@@ -78,8 +79,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
 
 

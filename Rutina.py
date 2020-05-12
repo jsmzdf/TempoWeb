@@ -10,6 +10,8 @@
 #-------------------------------------------------------------------------------
 
 #importe de librerias
+
+
 from Temporalizador import *
 
 class Intervalo:
@@ -70,6 +72,8 @@ class Rutina:
 
     def getBreak(self):
         return self.brkr
+
+
 
 def main():
     r = Rutina("Pierna", 30, 5, 10)
