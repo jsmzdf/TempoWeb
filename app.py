@@ -29,10 +29,26 @@ app.register_blueprint(logbp)
 
 import ModelosBD as mdb
 
+#inicializacion el logeo
+login_manager = LoginManager(app)
+login_manager.login_view = 'logbp.login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return usuario.query.get(int(user_id))
+
 #configuracion de ruta /
 @app.route('/', methods=["GET", "POST"])
+@login_required
 def index():
     return render_template('index.html')
+
+#configuracion de ruta /callback
+@app.route('/callback', methods=["GET", "POST"])
+def callback():
+    user = mdb.usuario("1111111", "apoyosolidarioesrealymipresidenteuribenuncanosmentiria")
+    login_user(user)
+    return redirect(url_for('index'))
 
 def main():
     app.run(debug=True)

@@ -11,6 +11,7 @@
 
 #importe de librerias
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from datetime import datetime
 
 URI = 'postgres://hoxwkmyfqupeab:c48a884b0095d4d7094b2543608cc2d10c58209a3370355bba9da6477a1c5f16@ec2-174-129-18-210.compute-1.amazonaws.com:5432/d1hi9b9fumoerc'
@@ -18,7 +19,7 @@ URI = 'postgres://hoxwkmyfqupeab:c48a884b0095d4d7094b2543608cc2d10c58209a3370355
 from App import db
 
 #definicion tabla usuario
-class usuario(db.Model):
+class usuario(UserMixin, db.Model):
     __tablename__ = 'usuario'
     __table_args__ = (
         db.CheckConstraint("nom_usu ~* '^[A-Za-z0-9._%-]+$'"),
@@ -26,8 +27,6 @@ class usuario(db.Model):
     id_usu = db.Column(db.Integer, primary_key=True, nullable=False)
     nom_usu = db.Column(db.String(200), unique=True, nullable=False)
     contra_usu = db.Column(db.String(200), nullable=False)
-    realizo = db.relationship('rutina',
-        backref=db.backref('realizada', lazy='dynamic'))
 
     def __init__(self, nom: str, passs: str):
         '''
@@ -47,6 +46,13 @@ class usuario(db.Model):
         '''
         return '<Usuario %r>' % self.nom_usu
 
+    @property
+    def id(self):
+        return self.id_usu
+
+    def get_id(self):
+        return self.id_usu
+
 #definicion tabla usuario
 class rutina(db.Model):
     __tablename__ = 'rutina'
@@ -57,6 +63,9 @@ class rutina(db.Model):
     repos_rut = db.Column(db.Integer, nullable=False)
     total_rut = db.Column(db.Integer, nullable=False)
     esper_rut = db.Column(db.Integer, nullable=False)
+    '''id_usu = db.Column(db.Integer, db.ForeignKey('usuario.id_usu'))
+    realizada = db.relationship('usuario',
+        backref=db.backref('realizo', lazy='dynamic'))'''
 
     def __init__(self, nom: str, date: str, inter: int, repos: int, total: int, esper: int):
         '''

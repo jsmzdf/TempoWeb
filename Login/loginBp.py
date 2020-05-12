@@ -33,6 +33,13 @@ def signin():
 def forgotpass():
     return render_template('forgotpass.html')
 
+#configuracion de ruta /logout
+@logbp.route('/logout', methods=["GET", "POST"])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
 def main():
     pass
 
