@@ -13,15 +13,25 @@
 from flask import Blueprint, render_template, redirect, url_for, session, request, flash
 from flask_login import LoginManager, login_required, current_user, logout_user, login_user
 from flask_sqlalchemy import SQLAlchemy
-from App import db
 
-laaa = 1
 logbp = Blueprint('logbp', __name__, template_folder='templates')#
+
+from App import db
 
 #configuracion de ruta /login
 @logbp.route('/login', methods=["GET", "POST"])
 def login():
     return render_template('login.html')
+
+#configuracion de ruta /signin
+@logbp.route('/signin', methods=["GET", "POST"])
+def signin():
+    return render_template('signin.html')
+
+#configuracion de ruta /forgotpass
+@logbp.route('/forgotpass', methods=["GET", "POST"])
+def forgotpass():
+    return render_template('forgotpass.html')
 
 def main():
     pass

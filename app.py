@@ -23,10 +23,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = index.URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db=SQLAlchemy(app)
 
-# De momento no quiere funcionar unu
-#from Login.loginBp import logbp
+from Login.loginBp import logbp
 # register our blueprints
-#app.register_blueprint()
+app.register_blueprint(logbp)
 
 import ModelosBD as mdb
 
@@ -34,21 +33,6 @@ import ModelosBD as mdb
 @app.route('/', methods=["GET", "POST"])
 def index():
     return render_template('index.html')
-
-#configuracion de ruta /login
-@app.route('/login', methods=["GET", "POST"])
-def login():
-    return render_template('login.html')
-
-#configuracion de ruta /signin
-@app.route('/signin', methods=["GET", "POST"])
-def signin():
-    return render_template('signin.html')
-
-#configuracion de ruta /forgotpass
-@app.route('/forgotpass', methods=["GET", "POST"])
-def forgotpass():
-    return render_template('forgotpass.html')
 
 def main():
     app.run(debug=True)

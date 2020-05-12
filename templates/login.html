@@ -16,20 +16,20 @@
             function signin(){
                 document.getElementById("nmUserLogin").attributes["required"]="";
                 document.getElementById("psUserLogin").attributes["required"]="";
-                document.getElementById("userlogin").action="{{url_for('signin')}}";
+                document.getElementById("userlogin").action="{{url_for('logbp.signin')}}";
                 document.getElementById("userlogin").submit();
             }
             function unfoundpass(){
                 document.getElementById("nmUserLogin").attributes["required"]="";
                 document.getElementById("psUserLogin").attributes["required"]="";
-                document.getElementById("userlogin").action="{{ url_for('forgotpass') }}";
+                document.getElementById("userlogin").action="{{ url_for('logbp.forgotpass') }}";
                 document.getElementById("userlogin").submit();
             }
         </script>
 	</head>
 	<body>
         <div class="container p-4">
-            <form class="px-4 py-3" id="userlogin" action="{{url_for('login')}}" method="POST">
+            <form class="px-4 py-3" id="userlogin" action="{{url_for('logbp.login')}}" method="POST">
                 <div class="form-group">
                     <label for="nmUserLogin">Usuario</label>
                     <input type="email" class="form-control" id="nmUserLogin" name="nmUserLog" placeholder="usuario@ejemplo.ext" required>
@@ -46,7 +46,7 @@
                     <button type="button" class="btn btn-secondary btn-sm" onclick="signin()">Registrate</button>
                 </p>
                 <p align="center">
-                    <a href="{{ url_for('forgotpass') }}">Reestablecer clave</a>
+                    <a href="{{ url_for('logbp.forgotpass') }}">Reestablecer clave</a>
                 </p>
             </form>
         </div>
