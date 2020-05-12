@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8"/>
+        <meta name="viewport"
+        content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible"
+        content="ie=edge"/>
+        <title>Registrarse</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}"/>
+        <script type="text/javascript">
+            alert('Advertencia: Para registrarse en la pagina debe ingresar un correo gmail.');
+        </script>
+	</head>
+	<body>
+        <div class="container p-4">
+            <form class="px-4 py-3" action="{{url_for('signindb')}}" method="POST">
+                <div class="form-group">
+                    <label for="nmUserLogin">Usuario</label>
+                    <input type="email" class="form-control" id="nmUserLogin" name="nmUserLog" placeholder="usuario@ejemplo.ext" value="{{correo}}" required>
+                </div>
+                <div class="form-group">
+                    <label for="nmbUserLogin">Nombre completo</label>
+                    <input type="text" class="form-control" id="nmbUserLogin" name="nmbUserLog" placeholder="Clave" required >
+                </div>
+                <div class="form-group">
+                    <label for="psUserLogin">Clave</label>
+                    <input type="password" class="form-control" id="psUserLogin" name="psUserLog" placeholder="Clave" required >
+                </div>
+                <p align="center">
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </p>
+            </form>
+            <div class="dropdown-divider"></div>
+        </div>
+	</body>
+</html>
