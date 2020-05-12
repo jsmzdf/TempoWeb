@@ -16,7 +16,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 logbp = Blueprint('logbp', __name__, template_folder='templates')#
 
-from app import db
+from app import db 
 
 #configuracion de ruta /login
 @logbp.route('/login', methods=["GET", "POST"])

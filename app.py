@@ -41,8 +41,16 @@ def load_user(user_id):
 @app.route('/', methods=["GET", "POST"])
 @login_required
 def index():
+    user = mdb.usuario.query.filter_by(nom_usu="1111111").first()
+    login_user(user)
 
-    return render_template('index.html')
+    #obj = mdb.rutina("pierna", '2020-4-1 9:46', 30, 30, 20, 20)
+    #db.session.add(obj)
+    #db.session.commit()
+    rutina = mdb.rutina.query.all()
+    rut=[rutina[x].nom_rut for x in range(len(rutina))]
+    print(rut)
+    return render_template('index.html', rutina=rut)
 
 #configuracion de ruta /callback
 @app.route('/callback', methods=["GET", "POST"])
