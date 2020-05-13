@@ -14,24 +14,19 @@
 
 from Temporalizador import *
 
-class Intervalo:
-    def __init__(self, tInt: int):
-        self.temp = Temporalizador()
-        self.temp.iniciar(tInt)
-
-    def iniciar(self):
-        pass
-
 class Rutina:
-    def __init__(self, nomb: str, tRutn: int,
-        tDesc: int, tEjer: int):
+    def __init__(self, nomb: str, tRutn: int, foutRut: callable,
+        tDesc: int, foutDesc: callable, tEjer: int, foutEjer: callable):
         self.nomb = nomb
         self.rutn = Temporalizador()
         self.rutn.ingresarT(tRutn)
+        self.foutRutn = foutRut
         self.ejrc = Temporalizador()
         self.ejrc.ingresarT(tEjer)
+        self.foutEjrc = foutEjer
         self.dscn = Temporalizador()
         self.dscn.ingresarT(tDesc)
+        self.foutDscn = foutDesc
         self.brkr = False
         self.stat = "Ejercicio"
 
@@ -41,15 +36,27 @@ class Rutina:
         self.rutn.detener()
         self.brkr = False
 
+    def cambiarStado(self):
+        if self.stat == "Ejercicio":
+            self.stat = "Descanso"
+        elif self.stat == "Descanso":
+            self.stat = "Ejercicio"
+
     def controladorState(self, tAct):
         print("Quedan", tAct, "segundos de ", self.stat)
-        if tAct == 0:
+        if self.stat == "Ejercicio" and self.foutEjrc:
+            self.foutEjrc(tAct)
+
+        if self.stat == "Descanso" and self.foutDscn:
+            self.foutDscn(tAct)
+
+        if int(tAct) == 0:
             if self.stat == "Ejercicio":
                 self.ejrc.detener()
-                self.stat = "Descanso"
             elif self.stat == "Descanso":
                 self.dscn.detener()
-                self.stat = "Ejercicio"
+            self.cambiarStado()
+
             if self.brkr == True:
                 self.iniciarState()
 
@@ -61,7 +68,10 @@ class Rutina:
 
     def controlarRutina(self, tAct):
         print("Quedan", tAct, "segundos de la rutina total de", self.nomb)
-        if tAct == 0:
+        if self.foutRutn:
+            self.foutRutn(tAct)
+
+        if int(tAct) == 0:
             self.detener()
             print("La rutina", self.nomb, "ha finalizado totalmente")
 
@@ -73,10 +83,8 @@ class Rutina:
     def getBreak(self):
         return self.brkr
 
-
-
 def main():
-    r = Rutina("Pierna", 30, 5, 10)
+    r = Rutina("Pierna", 15.0, None, 5.0, print, 10.0, None)
     r.iniciar()
     while r.getBreak():
         continue

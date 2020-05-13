@@ -63,8 +63,8 @@ class Temporalizador:
         self.contar(salida = salida)
 
     def contar(self, salida = None):
-        if self.getTAct() > 0:
-            threading.Timer(1,lambda: [self.setTAct(self.getTAct() - 1),print(self.getTAct()), self.exportarAct(salida), self.contar(salida=salida)]).start()
+        if int(self.getTAct()) > 0 and self.getBreak():
+            threading.Timer(1,lambda: [self.setTAct(self.getTAct() - 1), self.exportarAct(salida), self.contar(salida=salida)]).start()
         else:
             self.detener()
 

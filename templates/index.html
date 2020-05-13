@@ -1,73 +1,59 @@
+<!--Name:    Blablabla
+Purpose:     Sacarle nota a Daza 2(.(w/4))
+
+Author:      Alguien
+
+Created:     19/09/1999
+Copyright:   (TM) ays 2021(?)
+Licence:     <uranus>-->
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <form action="/index.html", method="GET", enctype="multipart/form-data"><br>
-    <label for="cars">Rutina</label>
-    <select id="cars">
-    {%if rutinas%}
-        {%for rut in rutinas%}
-            <option>{{rut.nom_rut}}</option>
-        {%endfor%}
-    {%endif%}
-    <option>Otra</option>
-    </select>
-    <label >Tiempo de duració </label><br>
-    <input type="text" name="TempminE" id="TempminE" class="Tiempo"  required>
-         <label >:</label>
-        <input type="text" name="TempsegE" id="TempsegE" class="Tiempo"  required><br>
-    <label>Distribución tiempo de Ejercicio</label><br>
-          <input type="text" name="TempminD" id="TempminD" class="Tiempo"  required>
-         <label >:</label>
-        <input type="text" name="TempsegD" id="TempsegD" class="Tiempo"  required><br>
-        <br>
-        <label>Distribución tiempo descanso</label><br>
-        <input type="text" name="distribucion" id="cla" class="Tiempo"  required><br>
-
-
-
-
-    </form>
-        <form action="/Rutina.html", method="GET", enctype="multipart/form-data">
-         <button type="submit" name="inirut" id="inirut" > Iniciar Runtina</button>
-    </form>
-
-    <form action="/index.html", method="GET", enctype="multipart/form-data"><br>
-    <label>Rutina: </label>
-        <label  name="rut" id="rut" class="Tiempo" >Volvo</label>
-        <br>
-    <label  name="MostrarT" id="MostrarT" class="Tiempo" >Tiempo de duració</label><br>
-    <label >12:234534</label>
-    </select><br>
-        <button type="submit" name="otra" id="otra" >Otra</button><br>
-    <label >Cronómetro </label><br>
-
-       <! --debes de ingresar la opcion que quieres en numero>
-        <form action="Rutina.py">
-        <input type=text name="opcionSal"><br>
-        <input type=submit  name="opcion" value="el disparador para esto">
-        <br>
-        <img src="IMGdescanso" alt="img-paint" class="img-thumbnail">
-        <br>
-         <img src="omgejercico" alt="img-paint" class="img-thumbnail">
-        <br>
-
-        <button type="submit" name="Empezar" id="Empezar" >Empezar</button>
-        <button type="submit" name="Pausar" id="Pausar" > Pausar</button>
-        </form>
-        <! --debes de ingresar la opcion que quieres en numero><br>
-
-           <img src="IMGdescanso" alt="img-paint" class="img-thumbnail">
-        <br>
-         <img src="omgejercico" alt="img-paint" class="img-thumbnail">
-        <br>
-
-        <button type="submit" name="Empezar" id="Empezar" >Empezar</button>
-        <button type="submit" name="Pausar" id="Pausar" > Pausar</button>
-        <button type="submit" name="Terminar" id="Terminar" > Terminar</button>
-    </form>
-    <h1>holaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</h1>
-</head>
-<body>
-
-</body>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8"/>
+        <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible"
+            content="ie=edge"/>
+        <title>Preparaci&oacute;n Rutina</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}"/>
+	</head>
+	<body>
+        <form id="pre-rut" action="{{url_for('sesion')}}" method="POST">
+        <div>
+            <label for="ruts">Rutina:</label>
+            <select id="ruts" name="nomRutPre">
+                {%if rutinas%}
+                    {%for rut in rutinas%}
+                <option>{{rut.nom_rut}}</option>
+                    {%endfor%}
+                {%endif%}
+                <option>Otra</option>
+            </select>
+            <input type="text" name="nomRut" id="nomRut"/>
+        </div>
+        <div>
+            <label >Tiempo de duraci&oacute;n </label>
+            <div>
+                <input type="text" name="tMinT" id="tMinT"/>
+                <label >:</label>
+                <input type="text" name="tSegT" id="tSegT"/>
+            </div>
+        </div>
+        <div>
+            <label>Distribuci&oacute;n tiempo de Ejercicio</label>
+            <input type="text" name="tSegE" id="tSegE"/>
+        </div>
+        <div>
+            <label>Distribuci&oacute;n tiempo descanso</label>
+            <input type="text" name="tSegR" id="tSegR" disabled/>
+        </div>
+         <button type="submit">Iniciar Runtina</button>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+        <div  class="alert">
+                {{ messages[0] }}
+        </div>
+            {% endif %}
+        {% endwith %}
+    </body>
 </html>

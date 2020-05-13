@@ -32,3 +32,75 @@
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+<form action="/index.html", method="GET", enctype="multipart/form-data"><br>
+    <label for="cars">Rutina</label>
+    <select id="cars">
+    {%if rutinas%}
+        {%for rut in rutinas%}
+            <option>{{rut.nom_rut}}</option>
+        {%endfor%}
+    {%endif%}
+    <option>Otra</option>
+    </select>
+    <label >Tiempo de duraci&oacute;n </label><br>
+    <input type="text" name="TempminE" id="TempminE" class="Tiempo"  required>
+         <label >:</label>
+        <input type="text" name="TempsegE" id="TempsegE" class="Tiempo"  required><br>
+    <label>Distribución tiempo de Ejercicio</label><br>
+          <input type="text" name="TempminD" id="TempminD" class="Tiempo"  required>
+         <label >:</label>
+        <input type="text" name="TempsegD" id="TempsegD" class="Tiempo"  required><br>
+        <br>
+        <label>Distribución tiempo descanso</label><br>
+        <input type="text" name="distribucion" id="cla" class="Tiempo"  required><br>
+
+
+
+
+    </form>
+        <form action="/Rutina.html", method="GET", enctype="multipart/form-data">
+         <button type="submit" name="inirut" id="inirut" > Iniciar Runtina</button>
+    </form>
+
+    <form action="/index.html", method="GET", enctype="multipart/form-data"><br>
+    <label>Rutina: </label>
+        <label  name="rut" id="rut" class="Tiempo" >Volvo</label>
+        <br>
+    <label  name="MostrarT" id="MostrarT" class="Tiempo" >Tiempo de duració</label><br>
+    <label >12:234534</label>
+    </select><br>
+        <button type="submit" name="otra" id="otra" >Otra</button><br>
+    <label >Cronómetro </label><br>
+
+       <! --debes de ingresar la opcion que quieres en numero>
+        <form action="Rutina.py">
+        <input type=text name="opcionSal"><br>
+        <input type=submit  name="opcion" value="el disparador para esto">
+        <br>
+        <img src="IMGdescanso" alt="img-paint" class="img-thumbnail">
+        <br>
+         <img src="omgejercico" alt="img-paint" class="img-thumbnail">
+        <br>
+
+        <button type="submit" name="Empezar" id="Empezar" >Empezar</button>
+        <button type="submit" name="Pausar" id="Pausar" > Pausar</button>
+        </form>
+        <! --debes de ingresar la opcion que quieres en numero><br>
+
+           <img src="IMGdescanso" alt="img-paint" class="img-thumbnail">
+        <br>
+         <img src="omgejercico" alt="img-paint" class="img-thumbnail">
+        <br>
+
+        <button type="submit" name="Empezar" id="Empezar" >Empezar</button>
+        <button type="submit" name="Pausar" id="Pausar" > Pausar</button>
+        <button type="submit" name="Terminar" id="Terminar" > Terminar</button>
+    </form>
+</body>
+</html>
