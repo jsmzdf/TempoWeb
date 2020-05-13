@@ -8,7 +8,7 @@
         content="ie=edge"/>
         <title>Inicio de Sesion</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-        <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}"/>
+        <link rel="stylesheet" href="{{url_for('logbp.static', filename='styles/main.css')}}"/>
         <script type='text/javascript'>
             {% if mensaje %}
                 alert('{{mensaje}}');
@@ -16,27 +16,22 @@
             function signin(){
                 document.getElementById("nmUserLogin").attributes["required"]="";
                 document.getElementById("psUserLogin").attributes["required"]="";
-                document.getElementById("userlogin").action="{{url_for('signin')}}";
-                document.getElementById("userlogin").submit();
-            }
-            function unfoundpass(){
-                document.getElementById("nmUserLogin").attributes["required"]="";
-                document.getElementById("psUserLogin").attributes["required"]="";
-                document.getElementById("userlogin").action="{{ url_for('forgotpass') }}";
+                document.getElementById("userlogin").action="{{url_for('logbp.signin')}}";
+                document.getElementById("userlogin").setAttribute("method", "GET");;
                 document.getElementById("userlogin").submit();
             }
         </script>
 	</head>
 	<body>
         <div class="container p-4">
-            <form class="px-4 py-3" id="userlogin" action="{{url_for('login')}}" method="POST">
+            <form class="px-4 py-3" id="userlogin" action="{{url_for('logbp.login')}}" method="POST">
                 <div class="form-group">
                     <label for="nmUserLogin">Usuario</label>
-                    <input type="email" class="form-control" id="nmUserLogin" name="nmUserLog" placeholder="usuario@ejemplo.ext" required>
+                    <input type="text" class="form-control" id="nmUserLogin" name="nmUserLog" placeholder="User1999" required>
                 </div>
                 <div class="form-group">
                     <label for="psUserLogin">Clave</label>
-                    <input type="password" class="form-control" id="psUserLogin" name="psUserLog" placeholder="Clave" required >
+                    <input type="password" class="form-control" id="psUserLogin" name="psUserLog" placeholder="miclave1234" required >
                 </div>
                 <p align="center">
                     <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
@@ -45,10 +40,14 @@
                 <p align="center">
                     <button type="button" class="btn btn-secondary btn-sm" onclick="signin()">Registrate</button>
                 </p>
-                <p align="center">
-                    <a href="{{ url_for('forgotpass') }}">Reestablecer clave</a>
-                </p>
             </form>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div  class="alert">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+            {% endwith %}
         </div>
 	</body>
 </html>
