@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <h1>holaaaaaaaaaaaaaaaa</h1>
     <form action="/index.html", method="GET", enctype="multipart/form-data"><br>
     <label for="cars">Rutina</label>
     <select id="cars">
-    {%if rutina%}
-                {%for rut in rutina%}
-                    <option>{{rut}}"</option>
-                {%endfor%}
-            {%endif%}
-
-    </select><br>
-        <button type="submit" name="otra" id="otra" >Otra</button><br>
+    {%if rutinas%}
+        {%for rut in rutinas%}
+            <option>{{rut.nom_rut}}</option>
+        {%endfor%}
+    {%endif%}
+    <option>Otra</option>
+    </select>
     <label >Tiempo de duració </label><br>
     <input type="text" name="TempminE" id="TempminE" class="Tiempo"  required>
          <label >:</label>
@@ -32,12 +30,7 @@
         <form action="/Rutina.html", method="GET", enctype="multipart/form-data">
          <button type="submit" name="inirut" id="inirut" > Iniciar Runtina</button>
     </form>
-    <h1>holaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</h1>
 
-
-
-
-     <h1>holaaaaaaaaaaaaaaaa</h1>
     <form action="/index.html", method="GET", enctype="multipart/form-data"><br>
     <label>Rutina: </label>
         <label  name="rut" id="rut" class="Tiempo" >Volvo</label>
@@ -75,6 +68,6 @@
     <h1>holaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</h1>
 </head>
 <body>
-   
+
 </body>
 </html>

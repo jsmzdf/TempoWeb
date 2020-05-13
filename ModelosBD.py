@@ -62,15 +62,16 @@ class rutina(db.Model):
     repos_rut = db.Column(db.Integer, nullable=False)
     total_rut = db.Column(db.Integer, nullable=False)
     esper_rut = db.Column(db.Integer, nullable=False)
-    '''id_usu = db.Column(db.Integer, db.ForeignKey('usuario.id_usu'))
+    id_usu = db.Column(db.Integer, db.ForeignKey('usuario.id_usu'))
     realizada = db.relationship('usuario',
-        backref=db.backref('realizo', lazy='dynamic'))'''
+        backref=db.backref('realizo', lazy='dynamic'))
 
-    def __init__(self, nom: str, date: str, inter: int, repos: int, total: int, esper: int):
+    def __init__(self, nom: str, date: str, inter: int, repos: int,
+                     total: int, esper: int, usu: int):
         '''
         Objeto en base de datos rutina
         Parametros:
-            documente manperra D:<
+            documente Mancera D:<
         '''
         self.nom_rut = nom
         self.date_rut = date
@@ -78,6 +79,7 @@ class rutina(db.Model):
         self.repos_rut = repos
         self.total_rut = total
         self.esper_rut = esper
+        self.id_usu = usu
 
     def __repr__(self) -> str:
         '''
@@ -85,4 +87,4 @@ class rutina(db.Model):
         Retorno:
             documente manperra D:<
         '''
-        return '<Rutina %r hecha %r>' % (self.nom_rut, self.date_rut)
+        return '<Rutina %r hecha %r de %r>' % (self.nom_rut, self.date_rut, self.id_usu)

@@ -14,6 +14,7 @@ from flask import Flask, render_template, redirect, url_for, session, request, f
 from flask_login import LoginManager, login_required, current_user, logout_user, login_user
 from flask_sqlalchemy import SQLAlchemy
 import index
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -41,30 +42,21 @@ def load_user(user_id):
 @app.route('/', methods=["GET", "POST"])
 @login_required
 def index():
-    user = mdb.usuario.query.filter_by(nom_usu="1111111").first()
-    login_user(user)
+    #rutina = mdb.rutina.query.all()
+    rutinas = list(current_user.realizo)
+    return render_template('index.html', rutinas=rutinas)
 
-    #obj = mdb.rutina("pierna", '2020-4-1 9:46', 30, 30, 20, 20)
-    #db.session.add(obj)
+#configuracion de ruta /sesion
+@app.route('/sesion', methods=["GET", "POST"])
+@login_required
+def sesion():
+    #ayuda para Savital
+    #rut = mdb.rutina("Pierna", '2020-4-1 9:46', 30, 30, 20, 20, objusuario.id_usu) #esto va si quiere hacerlo con una fecha y usuario especificos
+    #rut = mdb.rutina("Pierna", '2020-4-1 9:46', 30, 30, 20, 20, current_user.id_usu) #esto va si quiere hacerlo con el usuario logeado actual
+    #rut = mdb.rutina("Brazo", datetime.utcnow(), 30, 30, 120, 600, current_user.id_usu) #esto va si quiere hacerlo con la fecha actual
+    #db.session.add(rut)
     #db.session.commit()
-    rutina = mdb.rutina.query.all()
-    rut=[rutina[x].nom_rut for x in range(len(rutina))]
-    print(rut)
-    return render_template('index.html', rutina=rut)
-
-#configuracion de ruta /callback
-@app.route('/callback', methods=["GET", "POST"])
-def callback():
-    user = mdb.usuario.query.filter_by(nom_usu="1111111").first()
-    login_user(user)
-
-    obj = mdb.rutina("pierna", '2020-4-1 9:46', 30, 30, 20, 20)
-    db.session.add(obj)
-    db.session.commit()
-    rutina = mdb.rutina.query.all()
-
-    return redirect(url_for('index', rutina=rutina))
-
+    return redirect(url_for('index'))
 
 def main():
     app.run(debug=True)
