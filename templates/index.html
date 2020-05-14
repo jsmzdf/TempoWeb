@@ -19,41 +19,42 @@ Licence:     <uranus>-->
 	</head>
 	<body>
         <form id="pre-rut" action="{{url_for('sesion')}}" method="POST">
-        <div>
-            <label for="ruts">Rutina:</label>
-            <select id="ruts" name="nomRutPre">
-                {%if rutinas%}
-                    {%for rut in rutinas%}
-                <option>{{rut.nom_rut}}</option>
-                    {%endfor%}
-                {%endif%}
-                <option>Otra</option>
-            </select>
-            <input type="text" name="nomRut" id="nomRut"/>
-        </div>
-        <div>
-            <label >Tiempo de duraci&oacute;n </label>
             <div>
-                <input type="text" name="tMinT" id="tMinT"/>
-                <label >:</label>
-                <input type="text" name="tSegT" id="tSegT"/>
+                <label for="ruts">Rutina:</label>
+                <select id="ruts" name="nomRutPre">
+                    {%if rutinas%}
+                        {%for rut in rutinas%}
+                    <option>{{rut.nom_rut}}</option>
+                        {%endfor%}
+                    {%endif%}
+                    <option>Otra</option>
+                </select>
+                <input type="text" name="nomRut" id="nomRut"/>
             </div>
-        </div>
-        <div>
-            <label>Distribuci&oacute;n tiempo de Ejercicio</label>
-            <input type="text" name="tSegE" id="tSegE"/>
-        </div>
-        <div>
-            <label>Distribuci&oacute;n tiempo descanso</label>
-            <input type="text" name="tSegR" id="tSegR" disabled/>
-        </div>
-         <button type="submit">Iniciar Runtina</button>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-        <div  class="alert">
-                {{ messages[0] }}
-        </div>
-            {% endif %}
-        {% endwith %}
+            <div>
+                <label >Tiempo de duraci&oacute;n </label>
+                <div>
+                    <input type="text" name="tMinT" id="tMinT"/>
+                    <label >:</label>
+                    <input type="text" name="tSegT" id="tSegT"/>
+                </div>
+            </div>
+            <div>
+                <label>Distribuci&oacute;n tiempo de Ejercicio</label>
+                <input type="text" name="tSegE" id="tSegE"/>
+            </div>
+            <div>
+                <label>Distribuci&oacute;n tiempo descanso</label>
+                <input type="text" name="tSegR" id="tSegR" disabled/>
+            </div>
+             <button type="submit">Iniciar Runtina</button>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+            <div  class="alert">
+                    {{ messages[0] }}
+            </div>
+                {% endif %}
+            {% endwith %}
+        </form>
     </body>
 </html>

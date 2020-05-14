@@ -64,7 +64,7 @@ def index():
 @login_required
 def sesion():
     if (request.method=="GET"):
-        return render_template('rutina.html')
+        return render_template('rutina.html', tiempos = fkSession)
     else:
         try:
             newRut = request.form['nomRut']
@@ -103,7 +103,7 @@ def sesion():
         #rut = mdb.rutina("Brazo", datetime.utcnow(), 30, 30, 120, 600, current_user.id_usu) #esto va si quiere hacerlo con la fecha actual
         #db.session.add(rut)
         #db.session.commit()
-        return "nassadfkldaskl"
+        return redirect(url_for('sesion'))
 
 #configuracion de ruta /callback
 @app.route('/callback', methods=["GET", "POST"])
