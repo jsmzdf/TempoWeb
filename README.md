@@ -1,8 +1,10 @@
 # TempoWeb
 
 Juan Sebastian Mancera Gaitán 20171020047
+
 John Sebastian Martinez Zabala 20171020059
 Pedro Enrique Barrera 20171020057
+
 
 ## Objetivo 
 
@@ -10,11 +12,11 @@ Aplicación Every Minute On the Minute y manejo de usuarios pensado en component
 
 ### Componentes para el reuso:
 
-####-Login:
+#### Login:
 
 El módulo Login se pensó como un blueprint en el framework Flask para permitir su reutilización en cualquier otra plantilla Flask solo siendo necesario registrar el blueprint de nuevo.
 
-####-Temporalizador:  
+#### Temporalizador:  
 
 Cuando el objeto Temporalizador se actualiza se le puede ingresar una función de un unico parámetro  la cual es la encargada de actualizar  el tiempo, es decir cualquier función cuyo objetivo sea relacionada con contabilizar el tiempo de acuerdo a distintos aspectos y reciba un único parámetro puede utilizar el temporalizador de manera dinámica. 
 
