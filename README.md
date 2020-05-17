@@ -1,15 +1,16 @@
 # TempoWeb
 
-
-### Juan Sebastian Mancera Gaitán 20171020047
+#### Juan Sebastian Mancera Gaitán 20171020047
 ### John Sebastian Martinez Zabala 20171020059
 ### Pedro Enrique Barrera 20171020057
 
 Aplicación Every Minute On the Minute y manejo de usuarios pensado en componentes para el reuso.
 
-Componentes para el reuso:
+### Componentes para el reuso:
 
--Login:El módulo Login se pensó como un blueprint en el framework Flask para permitir su reutilización en cualquier otra plantilla Flask solo siendo necesario registrar el blueprint de nuevo.
+-Login:
+
+El módulo Login se pensó como un blueprint en el framework Flask para permitir su reutilización en cualquier otra plantilla Flask solo siendo necesario registrar el blueprint de nuevo.
 
 -Temporalizador:  
 
