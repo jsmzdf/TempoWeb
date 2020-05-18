@@ -63,6 +63,7 @@ def index():
 @app.route('/sesion', methods=["GET", "POST"])
 @login_required
 def sesion():
+    print("Va por ", request.method)
     if (request.method=="GET"):
         return render_template('rutina.html', tiempos = fkSession)
     else:
@@ -76,34 +77,33 @@ def sesion():
             flash("Fallo en el envio de datos. Revise los campos.")
             return redirect(url_for('index'))
 
-        if nomRut == "Otra":
-            nomRut = newRut
+        if nomRut == "Otra":nomRut = newRut
+
+        for dats in [mins, segs, ejrs]:
+            if dats == "":dats= 0
+
+            try:
+                dats = float(dats)
+            except:
+                flash("Fallo en el envio de datos. Algun campo numerico no es valido.")
+                return redirect(url_for('index'))
 
         if nomRut == "" or not nomRut:
             flash("Nombre de rutina erroneo.")
             return redirect(url_for('index'))
 
-        try:
-            mins = float(mins)
-            segs = float(segs)
-            ejrs = float(ejrs)
-        except:
-            flash("Fallo en el envio de datos. Algun campo numerico no es valido.")
-            return redirect(url_for('index'))
-
-        if 'saves' not in session:
-            session['saves'] = {}
-
-        rut = rt.Rutina(nomRut, float(float(mins)*60)+float(segs), sesssETTot, float(60-float(ejrs)), sesssETDsc, float(ejrs), sesssETEjr)
-        rut.iniciar()
-
+        #rut = rt.Rutina(nomRut, float(float(mins)*60)+float(segs), sesssETTot, float(60-float(ejrs)), sesssETDsc, float(ejrs), sesssETEjr)
+        fkSession['rNom'] = str(nomRut)
+        fkSession['tAct'] = int(float(float(mins)*60)+float(segs))
+        fkSession['tDes'] = int(60-float(ejrs))
+        fkSession['tEje'] = int(ejrs)
         #ayuda para Savital
         #rut = mdb.rutina("Pierna", '2020-4-1 9:46', 30, 30, 20, 20, objusuario.id_usu) #esto va si quiere hacerlo con una fecha y usuario especificos
         #rut = mdb.rutina("Pierna", '2020-4-1 9:46', 30, 30, 20, 20, current_user.id_usu) #esto va si quiere hacerlo con el usuario logeado actual
         #rut = mdb.rutina("Brazo", datetime.utcnow(), 30, 30, 120, 600, current_user.id_usu) #esto va si quiere hacerlo con la fecha actual
         #db.session.add(rut)
         #db.session.commit()
-        return redirect(url_for('sesion'))
+        return render_template('rutina.html', tiempos = fkSession)
 
 #configuracion de ruta /callback
 @app.route('/callback', methods=["GET", "POST"])

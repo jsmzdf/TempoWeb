@@ -16,16 +16,20 @@ Licence:     <uranus>-->
             content="ie=edge"/>
         <title>Rutina</title>
         <link rel="stylesheet" href="{{url_for('static', filename='css/main2.css')}}"/>
+        <script type="text/javascript" src="{{url_for('static', filename= 'Brython-3.8.8/brython.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename= 'Brython-3.8.8/brython_stdlib.js')}}"></script>
 	</head>
-	<body>
+    <body onload="brython({debug: 1, indexedDB: false})">
         <form id="rut" action="{{url_for('callback')}}" method="POST">
             <label>Rutina: </label>
+            <label> {{tiempos["rNom"]}}</label>
             <label>Tiempo de duraci&oacute;n</label>
             <label class="Tiempo" id="tAct"> {{tiempos["tAct"]}}</label>
-            <label>Tiempo de descanso</label>
-            <label class="Tiempo" id="tDes"> {{tiempos["tDes"]}}</label>
             <label>Tiempo de ejercicio</label>
             <label class="Tiempo" id="tEje"> {{tiempos["tEje"]}}</label>
+            <label>Tiempo de descanso</label>
+            <label class="Tiempo" id="tDes"> {{tiempos["tDes"]}}</label>
+            <input type="text" id="tR" name="tR" hidden="hidden"/>
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
             <div  class="alert">
@@ -33,6 +37,193 @@ Licence:     <uranus>-->
             </div>
                 {% endif %}
             {% endwith %}
+            <button type="button" id="init">Iniciar</button>
+            <button type="button" id="stup" disabled="disabled">Detener</button>
+            <button type="button" id="sao" disabled="disabled" onclick="submition('rut', '{{url_for('callback')}}')">Finalizar</button>
         </form>
+        <script type="text/python">
+        from browser import document
+        import threading
+        from browser.html import *
+        from browser import timer
+
+        class Temporalizador:
+            def __init__(self):
+                '''inicializa el Temporalizador con 0 segundos y pausado'''
+                self.tReal = 0
+                self.tAct = 0
+                self.breaker = False
+
+            def setTReal(self, t: int):
+                self.tReal = t
+
+            def setTAct(self, t: int):
+                self.tAct = t
+
+            def setBreak(self, b: bool):
+                self.breaker = b
+
+            def getTReal(self) -> int:
+                return self.tReal
+
+            def getTAct(self) -> int:
+                return self.tAct
+
+            def getBreak(self) -> bool:
+                return self.breaker
+
+            def exportarAct(self, salida):
+                try:
+                    salida(self.getTAct())
+                except:
+                    salida = self.getTAct()
+
+            def reset(self):
+                self.ingresarT(self.tReal)
+
+            def ingresarT(self, t: int):
+                self.setTReal(t)
+                self.setTAct(t)
+
+            def detener(self):
+                self.setBreak(False)
+
+            def continuar(self):
+                self.setBreak(True)
+
+            def iniciar(self, t: int, salida = None):
+                self.ingresarT(t)
+                self.setBreak(True)
+                self.contar(salida = salida)
+
+            def contar(self, salida = None):
+                if int(self.getTAct()) > 0 and self.getBreak():
+                    #threading.Timer(1,lambda: [self.setTAct(self.getTAct() - 1), print(salida), self.exportarAct(salida), self.contar(salida=salida)]).start()
+                    timer.set_timeout(lambda: [self.setTAct(self.getTAct() - 1), self.exportarAct(salida), self.contar(salida=salida)], 1000)
+                else:
+                    self.detener()
+
+        class Rutina:
+            def __init__(self, nomb: str, tRutn: int, foutRut: callable,
+                tDesc: int, foutDesc: callable, tEjer: int, foutEjer: callable):
+                self.nomb = nomb
+                self.rutn = Temporalizador()
+                self.rutn.ingresarT(tRutn)
+                self.foutRutn = foutRut
+                self.ejrc = Temporalizador()
+                self.ejrc.ingresarT(tEjer)
+                self.foutEjrc = foutEjer
+                self.dscn = Temporalizador()
+                self.dscn.ingresarT(tDesc)
+                self.foutDscn = foutDesc
+                self.brkr = False
+                self.stat = "Ejercicio"
+
+            def detener(self):
+                self.ejrc.detener()
+                self.dscn.detener()
+                self.rutn.detener()
+                self.brkr = False
+
+            def cambiarStado(self):
+                if self.stat == "Ejercicio":
+                    self.stat = "Descanso"
+                elif self.stat == "Descanso":
+                    self.stat = "Ejercicio"
+
+            def controladorState(self, tAct):
+                #document.write(f"<h3 align='center'>Quedan {tAct} segundos de {self.stat}</h3>")
+                #print("Quedan", tAct, "segundos de ", self.stat)
+                if self.stat == "Ejercicio" and self.foutEjrc:
+                    self.foutEjrc(tAct)
+
+                if self.stat == "Descanso" and self.foutDscn:
+                    self.foutDscn(tAct)
+
+                if int(tAct) == 0:
+                    if self.stat == "Ejercicio":
+                        self.ejrc.detener()
+                    elif self.stat == "Descanso":
+                        self.dscn.detener()
+                    self.cambiarStado()
+
+                    if self.brkr == True:
+                        self.iniciarState()
+
+            def iniciarState(self):
+                if self.stat == "Ejercicio":
+                    self.ejrc.iniciar(self.ejrc.getTReal(), salida=self.controladorState)
+                elif self.stat == "Descanso":
+                    self.dscn.iniciar(self.dscn.getTReal(), salida=self.controladorState)
+
+            def controlarRutina(self, tAct):
+                #document.write(f"<h3 align='center'>Quedan {tAct} segundos de la rutina total de {self.nomb}</h3>")
+                #print("Quedan", tAct, "segundos de la rutina total de", self.nomb)
+                if self.foutRutn:
+                    self.foutRutn(tAct)
+
+                if int(tAct) == 0:
+                    self.detener()
+                    #document.write(f"<h3 align='center'>La rutina {self.nomb} ha finalizado totalmente</h3>")
+                    #print("La rutina", self.nomb, "ha finalizado totalmente")
+
+            def iniciar(self):
+                self.brkr = True
+                self.rutn.iniciar(self.rutn.getTReal(), salida=self.controlarRutina)
+                self.iniciarState()
+
+            def getBreak(self):
+                return self.brkr
+
+        def setEjr(var: int):
+            document["tEje"].textContent = var
+
+        def setDsc(var: int):
+            document["tDes"].textContent = var
+
+        def setRut(var: int):
+            document["tAct"].textContent = var
+            document["tR"].textContent = var
+
+        def reset():
+            document["tAct"].textContent = {{tiempos["tAct"]}}
+            document["tEje"].textContent = {{tiempos["tEje"]}}
+            document["tDes"].textContent = {{tiempos["tDes"]}}
+
+        def iniciar(ev):
+            reset()
+            r.iniciar()
+            document["init"].disabled = "disabled"
+            document["init"].textContent = "Reiniciar"
+            document["stup"].disabled = ""
+            document["sao"].disabled = ""
+
+        def detener(ev):
+            r.detener()
+            reset()
+            document["stup"].disabled = "disabled"
+            document["sao"].disabled = "disabled"
+            document["init"].disabled = ""
+
+        document["init"].bind("click", iniciar)
+        document["stup"].bind("click", detener)
+
+        r = Rutina("{{tiempos['rNom']}}", {{tiempos["tAct"]}}, setRut, {{tiempos["tDes"]}}, setDsc, {{tiempos["tEje"]}}, setEjr)
+
+
+        </script>
+        <script type="text/javascript">
+            function submition(frmId, next, newTab){
+                if (newTab==1){
+                var w = window.open(next, '_blank');
+                w.focus();
+                }else{
+                var x = document.getElementById(frmId);
+                x.setAttribute("action", next);
+                x.submit();
+                }
+                replegar();
+            }
+        </script>
     </body>
 </html>

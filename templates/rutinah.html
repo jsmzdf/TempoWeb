@@ -1,0 +1,38 @@
+<!--Name:    Blablabla
+Purpose:     Sacarle nota a Daza 2(.(w/4))
+
+Author:      Alguien
+
+Created:     19/09/1999
+Copyright:   (TM) ays 2021(?)
+Licence:     <uranus>-->
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8"/>
+        <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible"
+            content="ie=edge"/>
+        <title>Rutina</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/main2.css')}}"/>
+	</head>
+	<body>
+        <form id="rut" action="{{url_for('callback')}}" method="POST">
+            <label>Rutina: </label>
+            <label>Tiempo de duraci&oacute;n</label>
+            <label class="Tiempo" id="tAct"> {{tiempos["tAct"]}}</label>
+            <label>Tiempo de descanso</label>
+            <label class="Tiempo" id="tDes"> {{tiempos["tDes"]}}</label>
+            <label>Tiempo de ejercicio</label>
+            <label class="Tiempo" id="tEje"> {{tiempos["tEje"]}}</label>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+            <div  class="alert">
+                    {{ messages[0] }}
+            </div>
+                {% endif %}
+            {% endwith %}
+        </form>
+    </body>
+</html>
