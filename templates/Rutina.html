@@ -29,7 +29,7 @@ Licence:     <uranus>-->
             <label class="Tiempo" id="tEje"> {{tiempos["tEje"]}}</label>
             <label>Tiempo de descanso</label>
             <label class="Tiempo" id="tDes"> {{tiempos["tDes"]}}</label>
-            <input type="text" id="tR" name="tR" hidden="hidden"/>
+            <input type="text" name="tR" id="tR" value="0" hidden="hidden"/>
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
             <div  class="alert">
@@ -183,7 +183,7 @@ Licence:     <uranus>-->
 
         def setRut(var: int):
             document["tAct"].textContent = var
-            document["tR"].textContent = var
+            document["tR"].value = var
 
         def reset():
             document["tAct"].textContent = {{tiempos["tAct"]}}
